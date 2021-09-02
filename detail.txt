@@ -1,0 +1,4 @@
+video 3 : defining a data model 
+1) created a models -> product.dart : blueprint
+2) created a screens -> product_overview_screen
+3) created a widgets folder
