@@ -1,4 +1,16 @@
+1) Branch master :
+
 video 3 : defining a data model 
 1) created a models -> product.dart : blueprint
 2) created a screens -> product_overview_screen
 3) created a widgets folder
+
+2) Branch video 4 to 10 :
+
+video 4 : 
+1) product_overview_screen : 
+= gridview.builder
+= gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
+2) create a widget Product_item : 
+= gridtile
+= gridtilebar 
