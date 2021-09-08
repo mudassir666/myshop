@@ -14,3 +14,9 @@ video 4 :
 2) create a widget Product_item : 
 = gridtile
 = gridtilebar 
+
+video 5:
+1) main -> fonts from assets\fonts store in pubspec.yaml
+2) product_item : 
+= ClipRRect -> to give rounded border , its child is gridtile 
+= color icons
