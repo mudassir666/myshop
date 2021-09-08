@@ -20,3 +20,12 @@ video 5:
 2) product_item : 
 = ClipRRect -> to give rounded border , its child is gridtile 
 = color icons
+
+video 6:   
+                              key                                 value
+1) main -> routes { ProductDetailScreen.routeName : (ctx) => ProductDetailScreen() }
+2) product_item :
+= GestureDetector
+= Navigator.of(context).pushNamed ( routename and arrgument )
+3) created a screen -> product_detail_screen :
+= ModalRoute.of(context)!.settings.arguments  -> to fetch arrguments  
