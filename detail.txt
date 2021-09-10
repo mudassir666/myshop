@@ -29,3 +29,15 @@ video 6:
 = Navigator.of(context).pushNamed ( routename and arrgument )
 3) created a screen -> product_detail_screen :
 = ModalRoute.of(context)!.settings.arguments  -> to fetch arrguments  
+
+video 9 : working with providers and listeners
+1) create providers folder -> products_provider file -> Products class :
+= Product class is combine with changeNotifier through mixin
+= list of _items which are private 
+= to access private list we created getter
+= to add product we created function with notifylistener so it could tell all the listers to rebuild widget
+2) main -> Wrape Materialapp with ChangeNotifierProvider 
+= to listen we need to wrape the child with ChangeNotifierProvider , so it could listen and change the listing widgets
+= which class we are listenig ->   create: (ctx) => Products()
+3) ProductsOverviewScreen -> we created a ProductsGrid class because we dont need to rebuild the widget tree , we will just rebuild the productGrid whenever it will listen 
+= created ProductsGrid -> with a listner -> Provider.of<Products>(context) -> which could access the Products class items and functions
