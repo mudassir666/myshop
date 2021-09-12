@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/providers/products_provider.dart';
+import 'package:myshop/models/products_provider.dart';
 import 'package:myshop/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +12,10 @@ class ProductsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: products.length,
-      itemBuilder: (ctx, index) => ProductItem(
-        id: products[index].id,
-        title: products[index].title,
-        imageUrl: products[index].imageUrl,
+      itemBuilder: (ctx, index) => ChangeNotifierProvider(
+        // here we just wants to listen single product
+        create: (c) => products[index],
+        child: ProductItem(),
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

@@ -59,7 +59,7 @@ video 11: Listrning in Different places and ways
     ///////////////////////////////////his second logic/////////////////////// from products_provider
 
     final loadedProduct = Provider.of<Products>(context,listen: false).findById(productId);
-    
+
 = listen: false = to aviod rebuild because we just need data one time
 
 2) products_provider -> function to find the product from item by matching ids :
@@ -68,4 +68,20 @@ video 11: Listrning in Different places and ways
     return _items.firstWhere((prod) => prod.id == id);
   }
  
+video 12 : Using Nested Models and Providers  
+   
+1) Shift products_provider.dart into models
 
+2) Product.dart -> add a ChangeNotifier with Product class :
+= create a function :  
+void toggleFavoriteStatus() {
+    // if it is true it will return false and if it is false it will return true
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
+
+3) Products_grid -> add a ChangeNotifierProvider on ProductItem because we want to listen single product
+= create: (c) => products[index]   : which means we are accessing single Product of Product class
+
+4) Product_item -> delete the constructor because we are accessing the product items from provider
+= change an icons of favorite and add a function.

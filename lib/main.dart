@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/providers/products_provider.dart';
 import 'package:myshop/screens/product_detail_screen.dart';
 import 'package:myshop/screens/products_overview_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'models/products_provider.dart';
 
 void main() {
   runApp(MyApp());
