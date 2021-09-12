@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/models/product.dart';
 
-
 class Products with ChangeNotifier {
   List<Product> _items = [
     Product(
@@ -43,9 +42,14 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
+  Product findById(String id) {
+    return _items
+        .firstWhere((prod) => prod.id == id);
+  }
+
   void addProduct() {
-   // _items.add(value);
-   //it will notify all the listner that some update has been made therefor listner widget will rebuild
+    // _items.add(value);
+    //it will notify all the listner that some update has been made therefor listner widget will rebuild
     notifyListeners();
   }
 }

@@ -41,3 +41,31 @@ video 9 : working with providers and listeners
 = which class we are listenig ->   create: (ctx) => Products()
 3) ProductsOverviewScreen -> we created a ProductsGrid class because we dont need to rebuild the widget tree , we will just rebuild the productGrid whenever it will listen 
 = created ProductsGrid -> with a listner -> Provider.of<Products>(context) -> which could access the Products class items and functions
+
+video 11: Listrning in Different places and ways   
+                           
+1) Product_detail_screen -> use Provider.of<Products>(context) to access product_provider class
+= To access the specific product from the item list :
+
+////////////////////////////////logic by me////////////////////////////////////
+
+    final product_provider = Provider.of<Products>(context);
+    final product = product_provider.items.firstWhere((product) => product.id == productId);
+
+    //////////////////////////////////his first logic/////////////////////////
+
+      final loadedProduct = Provider.of<Products>(context).items.firstWhere((prod) => prod.id == productId);
+
+    ///////////////////////////////////his second logic/////////////////////// from products_provider
+
+    final loadedProduct = Provider.of<Products>(context,listen: false).findById(productId);
+    
+= listen: false = to aviod rebuild because we just need data one time
+
+2) products_provider -> function to find the product from item by matching ids :
+
+=  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+ 
+
