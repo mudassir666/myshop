@@ -102,3 +102,17 @@ ChangeNotifierProvider.value(
         value: products[index],
         child: ProductItem(),
       )
+
+video 14 : user consumer instead of provider.of   
+   
+1) product_item -> Consumer : To run a sub part of a widget tree and make the Provider.of<Product>(context, listen: false)
+
+= Consumer<Product>(
+            builder: (ctx, product/instent, child/_ ) => widget(
+//could use child to be static or dont rebuild  
+//child : widget()
+            )
+)
+
+
+2) Consumer : it is used to shrink the area to rebuild , bs ussi part ko rebuild karta hai jo change hoga 
