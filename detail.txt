@@ -85,3 +85,20 @@ void toggleFavoriteStatus() {
 
 4) Product_item -> delete the constructor because we are accessing the product items from provider
 = change an icons of favorite and add a function.
+
+video 13 : Exploring alternative provider syntaxes   
+   
+1) ChangeNotifierProvider.value : to use provider on grid or list use .value , by this provider works well when the data changes for a widget
+
+= to reuse existing object use ChangeNotifierProvider.value
+
+2) ChangeNotifierProvider : whenever to create a new object/instant based on a class use ChangeNotifierProvider . it is used for parent and not to reuse existing object
+
+3) ChangeNotifierProvider automatically dispose the data which has been storing
+
+4) products_grid.dart : 
+ChangeNotifierProvider.value(
+        // here we just wants to listen single product
+        value: products[index],
+        child: ProductItem(),
+      )
