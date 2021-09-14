@@ -37,30 +37,21 @@ class Products with ChangeNotifier {
     ),
   ];
 
-  var _showFavoritesOnly = false;
 
   // we used getter so we could access private items
   List<Product> get items {
-    // if the showfavorite is true it will show the favorite list
-    if (_showFavoritesOnly) {
-      return _items.where((prodItem) => prodItem.isFavorite).toList();
-    }
     return [..._items];
+  }
+
+   List<Product> get favoriteItems {
+     // it will return the list which product item isFavorite is true
+     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void showFavoritesOnly() {
-    _showFavoritesOnly = true;
-    notifyListeners();
-  }
-
-  void showAll() {
-    _showFavoritesOnly = false;
-    notifyListeners();
-  }
 
   void addProduct() {
     // _items.add(value);
