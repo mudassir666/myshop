@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Listen is false because we dont want to rebuild the whole tree , Consumer will be rebuild
     final product = Provider.of<Product>(context, listen: false);
     print('product');
     return ClipRRect(
@@ -24,6 +25,7 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         footer: GridTileBar(
+          //Consumer is used to rebuild only this part or we could break it into different widget into a class
           leading: Consumer<Product>(
             builder: (ctx, product, child) => IconButton(
               onPressed: () {
