@@ -116,3 +116,52 @@ video 14 : user consumer instead of provider.of
 
 
 2) Consumer : it is used to shrink the area to rebuild , bs ussi part ko rebuild karta hai jo change hoga 
+
+video 15 : Local state vs App wide state  ( part 1 favorite filltering logic for whole app globally )
+   
+1) Always use statefull widget for a state that affect a single widget so dont use provider or provider class if you only want to change how something is displaced inside a widget. 
+2)  So in product_item :
+Consumer<Product>(
+            builder: (ctx, product, child) => IconButton(
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
+            ),
+          )
+here we could use statefull widget by using set state but favirote bs isse page par show nhi hoga iski funcatinally dosaray pages ky leay bhi hai thats why we use provider , ky filtering mai asani ho
+
+3) products_Provider.dart : create a var _showFavoritesOnly = false;
+= in item getter use if else ,so if the _showFavoirte is true show all the favorites items and else shoe all the items
+= create a 2 functions to make _showfavoritesonly true or false
+= call the functions in products_overview_screen
+
+4) Product_overview_screen : new widget PopupMenubutton and popupmenuItem
+= make a enum for filterOptions which will be used in popupmenubutton
+= create a filtering logic in popupmenubutton and acess those function from procuct_provider through Provider and make it listen : false
+
+
+video 15 : Local state vs App wide state  ( part 2 favorite fillter only apply for a single screen locally not for whole app )
+   
+In this video we will use a filtering logic so when we chose favorite it will show favorite items and when we chose all items it will show all the items ,
+1) so for this we create a favorite items list in
+= Products_ provider.dart -> with a filtering logic 
+
+  List<Product> get favoriteItems {
+     // it will return the list which product item isFavorite is true
+     return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
+2) product_overview_screen -> statefull class 
+= new widgets
+1) popupmenubutton
+2) popupmenuitem
+3) filteroption enum
+4) so here we create a variable showonlyfavorite which will be pass into Productgrid class 
+5) popupmenubutton can make showonlyfavorite true and false
+
+3) products_grid -> it will recive a showonlyfavorite varible 
+= if the varibale is true it will pass favoriteItems getter from products_provider class into ProductItems class to show favorite items list otherwise it will pass items getter  
