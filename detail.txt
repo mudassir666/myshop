@@ -181,3 +181,19 @@ video 16 : Adding shopping cart data
 = create a addItem function where it checks if the item is already exits so it will increase its quantity else add that new item in cart
 = Map : .containsKey , .update , .putIfAbsent
 
+video 17 : working with multiple providers
+
+1) As we are going to use cart provider into many screen , so we need to add the cart provider into root -> main.dart
+= main.dart -> new widget -> MultiProvider ( providers[] ) = to have many providers for a child
+MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Products(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Cart(),
+        ),
+      ],
+      child: MaterialApp()
+)
+
