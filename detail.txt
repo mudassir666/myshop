@@ -199,9 +199,12 @@ MultiProvider(
 
 video 18 : connecting the cart provider
 
-1) cart.dart -> create a itemcount getter which will tell the items length in cart
-2) create a widget class -> badge 
+1) product_item -> into cart icon add a function called cart.additems by providing cart provider
+2) cart.dart -> create a itemcount getter which will tell the items length in cart
+3) create a widget class -> badge 
 = its contructor need a color , value = itemcount , widget = icon button
-3) product_overview_screen -> consumer which has a badge 
+4) product_overview_screen -> consumer which has a badge 
 = we only need a rebuild a cart value 
 = badge icon button should be static
+
+
