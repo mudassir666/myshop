@@ -197,3 +197,11 @@ MultiProvider(
       child: MaterialApp()
 )
 
+video 18 : connecting the cart provider
+
+1) cart.dart -> create a itemcount getter which will tell the items length in cart
+2) create a widget class -> badge 
+= its contructor need a color , value = itemcount , widget = icon button
+3) product_overview_screen -> consumer which has a badge 
+= we only need a rebuild a cart value 
+= badge icon button should be static

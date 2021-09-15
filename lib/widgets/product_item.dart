@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/models/cart.dart';
 import 'package:myshop/models/product.dart';
 import 'package:myshop/screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Listen is false because we dont want to rebuild the whole tree , Consumer will be rebuild
     final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     print('product');
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -43,7 +45,9 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+            },
             icon: Icon(Icons.shopping_cart),
             color: Theme.of(context).accentColor,
           ),
