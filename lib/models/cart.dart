@@ -30,6 +30,16 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+  // to get the totalAmount
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, cartItem) {
+      //view each cartitem and add the amount in total
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
+  }
+
   void addItem(String productId, double price, String title) {
     // will check if the item has the same product id as a key , if true will increase the quantity else add the new item in cart
     if (_items.containsKey(productId)) {
