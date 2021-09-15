@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/models/cart.dart';
+// it will only import cart class not cartitem class
+import 'package:myshop/models/cart.dart' show Cart;
 import 'package:provider/provider.dart';
+import 'package:myshop/widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -51,6 +53,19 @@ class CartScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.items.length,
+              itemBuilder: (ctx, i) => CartItem(
+                //items are in map so all the map values will be converted into list then we will acess it
+                id: cart.items.values.toList()[i].id,
+                title: cart.items.values.toList()[i].title,
+                quantity: cart.items.values.toList()[i].quantity,
+                price: cart.items.values.toList()[i].price,
+              ) ,
             ),
           )
         ],

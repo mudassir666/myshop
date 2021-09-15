@@ -217,4 +217,15 @@ video 19 : Working on the shopping cart & displaying a total
 3) products_overview_screen -> create a navigator for cart_screen in cart button
 4) main -> set a router for cart_screen
 
+video 20 : Displaying a list of cart items
 
+1) widgets -> create a class : cart_items.dart
+= it show a Card which will be shown into cart_screen -> listview.builder
+= it has a contructor
+= circular avator , fitted box
+2) cart_screen -> Listview into expended to take avaliable space 
+= call cart_item contructor to pass parameter to show a card
+=  items are in map so all the map values will be converted into list then we will acess it by index one by one 
+ itemBuilder: (ctx, i) => CartItem(
+                id: cart.items.values.toList()[i].id,
+)
