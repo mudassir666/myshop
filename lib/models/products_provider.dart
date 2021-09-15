@@ -45,7 +45,7 @@ class Products with ChangeNotifier {
 
    List<Product> get favoriteItems {
      // it will return the list which product item isFavorite is true
-     return _items.where((prodItem) => prodItem.isFavorite).toList();
+     return _items.where((prodItem) => prodItem.isFavorite == true).toList();
   }
 
   Product findById(String id) {

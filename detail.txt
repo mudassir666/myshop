@@ -165,3 +165,19 @@ In this video we will use a filtering logic so when we chose favorite it will sh
 
 3) products_grid -> it will recive a showonlyfavorite varible 
 = if the varibale is true it will pass favoriteItems getter from products_provider class into ProductItems class to show favorite items list otherwise it will pass items getter  
+
+
+video 16 : Adding shopping cart data 
+
+1) models -> cart.dart :
+= create cart items blueprint
+= cart has a changenotifier maxin
+= use cart items blue print in cart class as a value in Map and key will be product id 
+= create a map private _items : Map<String, CartItem> _items;
+= create getter items :
+  Map<String, CartItem> get items {
+    return {..._items};
+  }
+= create a addItem function where it checks if the item is already exits so it will increase its quantity else add that new item in cart
+= Map : .containsKey , .update , .putIfAbsent
+
