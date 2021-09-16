@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // it will only import cart class not cartitem class
 import 'package:myshop/models/cart.dart' show Cart;
+import 'package:myshop/models/orders.dart';
 import 'package:provider/provider.dart';
 import 'package:myshop/widgets/cart_item.dart';
 
@@ -38,7 +39,15 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //converting cart items.object into a list of cart items.object instead of passing whole map
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      // after passing items to order we want to clear the cart
+                      cart.clear();
+                    },
                     child: Text(
                       'ORDER NOW',
                       style: TextStyle(
@@ -67,7 +76,7 @@ class CartScreen extends StatelessWidget {
                 price: cart.items.values.toList()[i].price,
                 // product id is the key which will be passed
                 productId: cart.items.keys.toList()[i],
-              ) ,
+              ),
             ),
           )
         ],

@@ -266,3 +266,19 @@ video 23 : Providing an Orders Object
   }
 
 3) main.dart -> add a order provider into the root 
+
+video 24 : Adding Orders
+
+1) cart_screen -> add addOrder function
+= in order now button :  
+ onPressed: () {
+                      //converting cart items.object into a list of cart items.object instead of passing whole map
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      // after passing items to order we want to clear the cart
+                      cart.clear();
+                    }
+
+= here we are pass item values as a list and total amount and clearing the cart
