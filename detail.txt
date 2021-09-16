@@ -243,3 +243,9 @@ video 21 : Making cart  items dismissible
 3) cart_screen -> pass a product Id which is a key throug constructor 
 = // product id is the key which will be passed
        productId: cart.items.keys.toList()[i]
+
+
+video 22 : adding product detail data
+
+1) product_detail_screem -> decorate the detail page
+= softWrap : if the text is huge so it will be break
