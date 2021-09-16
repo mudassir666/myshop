@@ -65,6 +65,8 @@ class CartScreen extends StatelessWidget {
                 title: cart.items.values.toList()[i].title,
                 quantity: cart.items.values.toList()[i].quantity,
                 price: cart.items.values.toList()[i].price,
+                // product id is the key which will be passed
+                productId: cart.items.keys.toList()[i],
               ) ,
             ),
           )

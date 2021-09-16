@@ -63,4 +63,10 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // deleting a product form cart with the help of key
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
 }

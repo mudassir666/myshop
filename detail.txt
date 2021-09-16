@@ -229,3 +229,17 @@ video 20 : Displaying a list of cart items
  itemBuilder: (ctx, i) => CartItem(
                 id: cart.items.values.toList()[i].id,
 )
+
+video 21 : Making cart  items dismissible
+
+1) models -> cart.dart -> create a remove item function.
+2) widgets -> cart_items -> add a new widget on card
+= Dismissible -> which will delete the item form cart 
+= it has some cool background color item and a remove function
+: onDismissed: (direction) {
+        // here we just need a data thats why the listen is false
+        Provider.of<Cart>(context,listen: false).removeItem(productId);
+}
+3) cart_screen -> pass a product Id which is a key throug constructor 
+= // product id is the key which will be passed
+       productId: cart.items.keys.toList()[i]
