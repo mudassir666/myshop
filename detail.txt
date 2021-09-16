@@ -249,3 +249,20 @@ video 22 : adding product detail data
 
 1) product_detail_screem -> decorate the detail page
 = softWrap : if the text is huge so it will be break
+
+video 23 : Providing an Orders Object
+
+1) models -> create a new class -> orders.dart
+= it has its own id
+= it will need total amount of the cart
+= it consist the list of items present in cart
+= need a datetime when the order is placed
+
+2) cart -> create a new clear function
+= it will clear the cart items and move the items into order list
+=  void clear() {
+    _items = {};
+    notifyListeners();
+  }
+
+3) main.dart -> add a order provider into the root 

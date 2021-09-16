@@ -69,4 +69,10 @@ class Cart with ChangeNotifier {
     _items.remove(productId);
     notifyListeners();
   }
+
+  // items will be clear when order now button pressed so all the items move into order list
+  void clear() {
+    _items = {};
+    notifyListeners();
+  }
 }
