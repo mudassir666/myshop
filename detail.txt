@@ -282,3 +282,14 @@ video 24 : Adding Orders
                     }
 
 = here we are pass item values as a list and total amount and clearing the cart
+
+
+video 25 :Adding an order screen
+
+1) screen -> create a class -> orders_screen
+= call a order provider
+= pass the order provider through constructor
+
+2) widgets -> create a widget class -> order_item
+= add a intl package
+= create a card which will be shown into orders_screen
