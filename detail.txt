@@ -306,3 +306,11 @@ video 26 : Using a side Drawer
 = order_screen
 
 3) set Order_Screem route into main
+
+
+video 27 : Making orders Expandable & statefull widget vs provider
+
+1) Order_Item -> To make changes in a card like expending it or not so for that make it stateful class
+= stateful is used for local widget changes
+= show a container detail if we click button
+= if (_expanded) is true show else dont show
