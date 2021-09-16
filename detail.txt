@@ -293,3 +293,16 @@ video 25 :Adding an order screen
 2) widgets -> create a widget class -> order_item
 = add a intl package
 = create a card which will be shown into orders_screen
+
+video 26 : Using a side Drawer
+
+1) widgets -> create a widget -> app_drawer
+= it has two routes
+= shop -> product_overview_screen
+= order -> order_screen
+
+2) add drawer into
+= product_overview_screen
+= order_screen
+
+3) set Order_Screem route into main
