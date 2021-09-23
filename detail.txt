@@ -404,4 +404,14 @@ video 5, 6 & 7 : Edit product screen & a problem / using form & working with for
 :3 FocusNode()
 :4 FocusScope()
 
+video 8 : Multiline inputs & disposing Objects
+
+1) add a description text form 
+= How many lines should be display -> maxLines: 3,
+= It will give enter symbol to add line -> keyboardType: TextInputType.multiline,
+= add focus node just like price
+
+2) dispose both price and description focus nodes
+= because after leaving the screen they will consume memory
+
 
