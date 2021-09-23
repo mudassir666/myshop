@@ -338,3 +338,16 @@ ScaffoldMessenger.of(context).showSnackBar( SnackBar() );
 = ScaffoldMessenger.of(context).showSnackBar();
 = SnackBar()
 = SnackBarAction()
+
+video 2 : Showing alert dialogs
+
+1) Cart_item.dart -> confirm dismiss () {} -> it is a conformation msg are you sure to delete it or not
+= confirm dismiss function return future
+= showDialog -> display a msg , it can have altert dialog , about dialog and more
+= Alert dialog -> has many feature like action in which you can return false and true through pop
+: Navigator.of(ctx).pop(true);
+
+2) new
+= confirmDismiss(){ return Future }
+= showDialog()
+= AlertDialog()
