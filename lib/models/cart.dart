@@ -70,6 +70,30 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeSingleItem(String productId) {
+    // it will check if the product is part of the list or not , if its not part of the list so it will end the function otherwise it will check futher
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    // check if the product are more then one , so it will remove 1 quantity
+    if (_items[productId]!.quantity > 1) {
+      _items.update(
+        productId,
+        (existingCardItem) => CartItem(
+          id: existingCardItem.id,
+          title: existingCardItem.title,
+          price: existingCardItem.price,
+          quantity: existingCardItem.quantity - 1,
+        ),
+      );
+    }
+    //it will check if its the single product so it will be deleted 
+    else {
+      _items.remove(productId);
+    }
+    notifyListeners();
+  }
+
   // items will be clear when order now button pressed so all the items move into order list
   void clear() {
     _items = {};

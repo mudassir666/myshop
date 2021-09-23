@@ -314,3 +314,27 @@ video 27 : Making orders Expandable & statefull widget vs provider
 = stateful is used for local widget changes
 = show a container detail if we click button
 = if (_expanded) is true show else dont show
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+                              user input and form
+
+video 1 :  Snackbars & Undoing add to cart
+
+1) product_item -> ScaffoldMessenger.of(context) -> it will access the nearest scaffold widget
+= it is use to hide the pervious snackbar
+ScaffoldMessenger.of(context).hideCurrentSnackBar();
+= it is use to show the snackbar with some funcunallty
+ScaffoldMessenger.of(context).showSnackBar( SnackBar() );
+
+2) model -> cart.dart :
+= create a new removeSingleItem function which will be added into snackbar
+:1 first it will check if the productId exist or not
+:2 second it will cheek if it has more than 1 quantity
+:3 third it will delete the item if quantity is 0
+
+3) new 
+= ScaffoldMessenger.of(context).hideCurrentSnackBar();
+= ScaffoldMessenger.of(context).showSnackBar();
+= SnackBar()
+= SnackBarAction()
