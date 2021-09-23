@@ -378,3 +378,30 @@ children: [
 3) main -> add user_products_screen route
 
 4) app_drawer -> add user_products_screen navigator
+
+video 5, 6 & 7 : Edit product screen & a problem / using form & working with form inputs / managing form input focus
+
+1) screem -> create new screen -> edit_product_screen
+= it will be a statefull because we want to store data tempalally and use  user/Form input
+= Form will be used as a body which contain text form field
+= listview to show limited text form field , if we need more form so replace listview with singlechildscroll -> column
+= textInputAction: TextInputAction.next,  -> this will show a button which will move towards next input
+= create a focusnode variable -> which focus on a single input form
+: final _priceFocusNode = FocusNode();
+= to the form will has to be focused 
+: add this -> focusNode: _priceFocusNode,
+= from the form which focus other form after submittion 
+:  onFieldSubmitted: (_) {
+ FocusScope.of(context).requestFocus(_priceFocusNode); }
+
+2) main -> add edit_product_screen navigator
+
+3) user_products_screen -> add the edit_product_screen navigator into the button
+
+4) new
+:1 form()
+:2 textformfield()
+:3 FocusNode()
+:4 FocusScope()
+
+
