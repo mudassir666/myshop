@@ -317,7 +317,7 @@ video 27 : Making orders Expandable & statefull widget vs provider
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-                              user input and form
+                                              user input and form
 
 video 1 :  Snackbars & Undoing add to cart
 
