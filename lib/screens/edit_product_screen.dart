@@ -49,6 +49,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
   //step 4 : check if imgUrlnode has focus or not , when the imgUrlnode loses focus it will update it by setState
   void _updateImageUrl() {
     if (!_imgUrlFocusNode.hasFocus) {
+      if (
+      // if value does not have http or https , will show error msg
+          (!_imgUrlController.text.startsWith('http') &&
+              !_imgUrlController.text.startsWith('https')) ||
+              // it should end with the following
+          (!_imgUrlController.text.endsWith('.png') &&
+              !_imgUrlController.text.endsWith('.jpg') &&
+              !_imgUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
       setState(() {});
     }
   }
@@ -135,6 +145,22 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       price: double.parse(value.toString()),
                       imageUrl: _editedProduct.imageUrl);
                 },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a price';
+                  }
+                  // when user enter something instead of number
+                  // tryParse return null when it falses
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid number';
+                  }
+                  // to check if value is smaller or equal to 0 ,so we will stop it
+                  if (double.parse(value) <= 0) {
+                    return 'Please enter a number greater than zero';
+                  }
+                  // when nothing goes wrong
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Description'),
@@ -151,6 +177,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       description: value.toString(),
                       price: _editedProduct.price,
                       imageUrl: _editedProduct.imageUrl);
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description.';
+                  }
+                  if (value.length < 10) {
+                    return 'Should be at least 10 characters long.';
+                  }
+                  return null;
                 },
               ),
               Row(
@@ -199,6 +234,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           price: _editedProduct.price,
                           imageUrl: value.toString(),
                         );
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter an image URL.';
+                        }
+                        // if value does not have http or https , will show error msg
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please enter a valid URL.';
+                        }
+                        // it should end with the following
+                         if (!value.endsWith('.png') &&
+                            !value.endsWith('.jpg') &&
+                            !value.endsWith('.jpeg')
+                            ) {
+                          return 'Please enter a valid image URL.';
+                        }
+                        return null;
                       },
                     ),
                   ),

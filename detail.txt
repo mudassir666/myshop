@@ -517,3 +517,13 @@ video 11 : Validating User input
     if (!isValid) {
       return;
     }
+
+video 12 : Adding Validation to all inputs
+
+1) Add validation into remaining textfieldform with logic
+= endwith
+= startwith
+= tryparse
+= .length
+
+2) Add imgUrl validation logic into updateImageUrl function with _imgUrlController.text.
