@@ -54,6 +54,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    // it will check all the validation must return null otherwise it will end
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     // by using global key which has the asscess of form , we can save it
     _form.currentState!.save();
     print(_editedProduct.title);
@@ -99,6 +104,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       description: _editedProduct.description,
                       price: _editedProduct.price,
                       imageUrl: _editedProduct.imageUrl);
+                },
+                // validator value is the input value
+                validator: (value) {
+                  // check if the value is empty it will generate a error msg
+                  if (value!.isEmpty) {
+                    return 'Please provide a value';
+                  }
+                  // if its not empty just return
+                  return null;
                 },
               ),
               TextFormField(

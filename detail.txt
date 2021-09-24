@@ -496,3 +496,24 @@ video 10 : submitting forms
                       price: _editedProduct.price,
                       imageUrl: _editedProduct.imageUrl);
 },
+
+video 11 : Validating User input
+
+1) In Textformfield -> add validation
+= validator : (value) {}
+= return null mean input is correct / no error
+= return text mean error 
+= validator value is the input value
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please provide a value';
+                  }
+                  return null;
+                },
+
+2) In saveForm function -> check validation
+= it will check all the validation must return null otherwise it will end
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
