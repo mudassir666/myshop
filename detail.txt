@@ -581,4 +581,14 @@ initialValue: _initValues['title'],
 5) edit_product_screen -> add updateProduct function into saveForm function
 = if it is clicked by edited button it will update the product otherwise create a new one
 
-1)
+video 15 : allowing usersto delete products
+
+1) products_provider.dart -> create a delete function
+= 
+  void deleteProduct(String id) {
+    _items.removeWhere((prop) => prop.id == id);
+    notifyListeners();
+  }
+
+2) user_product_items -> add a delete function into delete button with the help of provider
+= Provider.of<Products>(context,listen: false).deleteProduct(id);

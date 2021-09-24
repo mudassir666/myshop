@@ -80,4 +80,9 @@ class Products with ChangeNotifier {
       print('no index');
     }
   }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prop) => prop.id == id);
+    notifyListeners();
+  }
 }
