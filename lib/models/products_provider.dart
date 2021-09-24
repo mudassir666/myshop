@@ -37,24 +37,33 @@ class Products with ChangeNotifier {
     ),
   ];
 
-
   // we used getter so we could access private items
   List<Product> get items {
     return [..._items];
   }
 
-   List<Product> get favoriteItems {
-     // it will return the list which product item isFavorite is true
-     return _items.where((prodItem) => prodItem.isFavorite == true).toList();
+  List<Product> get favoriteItems {
+    // it will return the list which product item isFavorite is true
+    return _items.where((prodItem) => prodItem.isFavorite == true).toList();
   }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  void addProduct(Product product) {
+    // the product we are getting from argument , it will be pass into new product then it will be added
+    final newProduct = Product(
+      id: DateTime.now().toString(),
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
 
-  void addProduct() {
-    // _items.add(value);
+    _items.add(newProduct);
+   // _items.insert(0, newProduct); // at the start of the list
+
     //it will notify all the listner that some update has been made therefor listner widget will rebuild
     notifyListeners();
   }

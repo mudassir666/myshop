@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/models/product.dart';
+import 'package:myshop/models/products_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -50,13 +52,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void _updateImageUrl() {
     if (!_imgUrlFocusNode.hasFocus) {
       if (
-      // if value does not have http or https , will show error msg
+          // if value does not have http or https , will show error msg
           (!_imgUrlController.text.startsWith('http') &&
-              !_imgUrlController.text.startsWith('https')) ||
+                  !_imgUrlController.text.startsWith('https')) ||
               // it should end with the following
-          (!_imgUrlController.text.endsWith('.png') &&
-              !_imgUrlController.text.endsWith('.jpg') &&
-              !_imgUrlController.text.endsWith('.jpeg'))) {
+              (!_imgUrlController.text.endsWith('.png') &&
+                  !_imgUrlController.text.endsWith('.jpg') &&
+                  !_imgUrlController.text.endsWith('.jpeg'))) {
         return;
       }
       setState(() {});
@@ -71,11 +73,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     // by using global key which has the asscess of form , we can save it
     _form.currentState!.save();
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.imageUrl);
-    print(_editedProduct.price);
-    print(_editedProduct.id);
+    // adding the product into the list
+    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    // after saving and adding into the item list , it will show manage product screen.
+    Navigator.of(context).pop();
+    // print(_editedProduct.title);
+    // print(_editedProduct.description);
+    // print(_editedProduct.imageUrl);
+    // print(_editedProduct.price);
+    // print(_editedProduct.id);
   }
 
   @override
@@ -245,10 +251,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return 'Please enter a valid URL.';
                         }
                         // it should end with the following
-                         if (!value.endsWith('.png') &&
+                        if (!value.endsWith('.png') &&
                             !value.endsWith('.jpg') &&
-                            !value.endsWith('.jpeg')
-                            ) {
+                            !value.endsWith('.jpeg')) {
                           return 'Please enter a valid image URL.';
                         }
                         return null;

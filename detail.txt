@@ -527,3 +527,11 @@ video 12 : Adding Validation to all inputs
 = .length
 
 2) Add imgUrl validation logic into updateImageUrl function with _imgUrlController.text.
+
+video 13 : saving new products
+
+1) products_provider.dart -> create a addProduct function with takes Product as an argument.
+2) edit_product_screen.dart -> in saveform function 
+= Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+= call addProduct function and pass editedProduct
+= call navigator to pop 
