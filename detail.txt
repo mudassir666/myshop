@@ -458,3 +458,41 @@ video 9 : image input & image preview
 4) dispose both  
 = _imgUrlController,
 = _imgUrlFocusNode, 
+
+video 10 : submitting forms
+
+1) to use form property assign global key 
+
+2) create a global key
+= final _form = GlobalKey<FormState>();
+
+3) assign a key to form , so it could access its data outside
+= Form ( key : _form)
+
+4)  create a _saveform function , which will save the form
+= _form.currentState!.save();
+
+5) create two button 
+= 1 button in appbar which triger saveform() function
+= 2 button in imgUrl textformfield which saveform() function
+: onFieldSubmitted: (_) { _saveForm(); }
+
+6) create a empty Product object
+  var _editedProduct = Product(
+    id: null.toString(),
+    title: '',
+    description: '',
+    price: 0,
+    imageUrl: '',
+  );
+
+7)  update the product object into all the textformfield by  onsaved  
+= when the save button is click the form input move into the product object by updating it
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: null.toString(),
+                      title: value.toString(),
+                      description: _editedProduct.description,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl);
+},

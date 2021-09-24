@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/models/product.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -13,6 +14,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imgUrlController = TextEditingController();
   //step 1 : creating custom listner
   final _imgUrlFocusNode = FocusNode();
+  // global key most use for forms
+  final _form = GlobalKey<FormState>();
+
+  // Object of Product which is empty
+  var _editedProduct = Product(
+    id: null.toString(),
+    title: '',
+    description: '',
+    price: 0,
+    imageUrl: '',
+  );
 
 //step 5 : when the update function rebuild state then it run initstate after listning
   @override
@@ -34,11 +46,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
- //step 4 : check if imgUrlnode has focus or not , when the imgUrlnode loses focus it will update it by setState
+  //step 4 : check if imgUrlnode has focus or not , when the imgUrlnode loses focus it will update it by setState
   void _updateImageUrl() {
     if (!_imgUrlFocusNode.hasFocus) {
       setState(() {});
     }
+  }
+
+  void _saveForm() {
+    // by using global key which has the asscess of form , we can save it
+    _form.currentState!.save();
+    print(_editedProduct.title);
+    print(_editedProduct.description);
+    print(_editedProduct.imageUrl);
+    print(_editedProduct.price);
+    print(_editedProduct.id);
   }
 
   @override
@@ -46,10 +68,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveForm,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          // proving global key to access its data outside
+          key: _form,
           child: ListView(
             children: [
               TextFormField(
@@ -60,6 +90,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   // when submitted the focus will moves towards the requested focus node
                   FocusScope.of(context).requestFocus(_priceFocusNode);
+                },
+                // when the save button is click the form input move into the product object by updating it
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: null.toString(),
+                      title: value.toString(),
+                      description: _editedProduct.description,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl);
                 },
               ),
               TextFormField(
@@ -73,6 +112,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   // when submitted the focus will moves towards the requested focus node
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                // when the save button is click the form input move into the product object by updating it
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: null.toString(),
+                      title: _editedProduct.title,
+                      description: _editedProduct.description,
+                      price: double.parse(value.toString()),
+                      imageUrl: _editedProduct.imageUrl);
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Description'),
@@ -81,6 +129,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 //it will give enter symbol to add line
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                // when the save button is click the form input move into the product object by updating it
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: null.toString(),
+                      title: _editedProduct.title,
+                      description: value.toString(),
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl);
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -115,6 +172,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       controller: _imgUrlController,
                       // step 3 : to focus on this form
                       focusNode: _imgUrlFocusNode,
+                      // when pressing the done button it will submit the form
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
+                      // when the save button is click the form input move into the product object by updating it
+                      onSaved: (value) {
+                        _editedProduct = Product(
+                          id: null.toString(),
+                          title: _editedProduct.title,
+                          description: _editedProduct.description,
+                          price: _editedProduct.price,
+                          imageUrl: value.toString(),
+                        );
+                      },
                     ),
                   ),
                 ],
