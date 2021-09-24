@@ -414,4 +414,47 @@ video 8 : Multiline inputs & disposing Objects
 2) dispose both price and description focus nodes
 = because after leaving the screen they will consume memory
 
+video 9 : image input & image preview
 
+1) add a image and show it before submitting 
+= Row has two child 
+:1 container -> child -> fittedbox -> image.network -> _imgUrlController.text after click done button
+:2 expended -> imageUrl textformfield :- 
+= textInputAction: TextInputAction.done, -> done button 
+= keyboardType: TextInputType.url,
+= add focus node just like price
+= controller: _imgUrlController, ->  using controller to show the image in fittedBox before submitting
+
+2) textformfield takes as much width as it get of mobile 
+
+3) Custom _imgUrl listner
+= in steps
+
+:1) creating custom listner
+= final _imgUrlFocusNode = FocusNode();
+:2) distoring when exist page
+= _imgUrlFocusNode.dispose();
+:3) to focus in textfieldform
+= focusNode: _imgUrlFocusNode,
+
+:4) check if imgUrlFocusNode has focus or not
+= when the imgUrlnode loses focus it will update it by setState
+  void _updateImageUrl() {
+    if (!_imgUrlFocusNode.hasFocus) {
+      setState(() {});
+    }
+  }
+
+:5) when the update function rebuild state then it run initstate after listning
+= void initState() {
+    _imgUrlFocusNode.addListener(_updateImageUrl);
+    super.initState();
+  } 
+
+:6) dispose the imgUrlFocus listner 
+= _imgUrlFocusNode.removeListener(_updateImageUrl);
+
+
+4) dispose both  
+= _imgUrlController,
+= _imgUrlFocusNode, 
