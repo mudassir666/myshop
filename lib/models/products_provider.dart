@@ -47,7 +47,7 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite == true).toList();
   }
 
-  Product findById(String id) {
+  Product findById(var id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
@@ -62,9 +62,22 @@ class Products with ChangeNotifier {
     );
 
     _items.add(newProduct);
-   // _items.insert(0, newProduct); // at the start of the list
+    // _items.insert(0, newProduct); // at the start of the list
 
     //it will notify all the listner that some update has been made therefor listner widget will rebuild
     notifyListeners();
+  }
+
+  void updateProduct(String id, Product newProduct) {
+    // it will give the index of the product we are going to update
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    //to check if we have  the index or not
+    if (prodIndex >= 0) {
+      // replace the chosen product from index to newProduct
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('no index');
+    }
   }
 }

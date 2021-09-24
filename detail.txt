@@ -535,3 +535,50 @@ video 13 : saving new products
 = Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
 = call addProduct function and pass editedProduct
 = call navigator to pop 
+
+video 14 : time to update product
+
+1) user_product_item -> in edited button add a route to editProductScreen with argument id
+=  Navigator.of(context).pushNamed(EditProductScreen.routeName , arguments: id);
+
+2) edit_product_screen -> check if we enter from edited button with argument or from add button
+
+= create a map of initvalues  for new product
+: var _initValues = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
+
+= add a function of didChangeDependencies which run before builder excution
+= create a _isInit variable = true , which run didChangeDependencies single time
+= in didChangeDependencies we check  the following steps
+:1) reciving id from edited button argument
+final productId = ModalRoute.of(context)!.settings.arguments;
+add a if condition to check productId must not be null
+
+:2) add the productId info into the _editedProduct which is a Product Object
+_editedProduct = Provider.of<Products>(context, listen: false).findById(productId);
+
+:3) add the _editedProduct info into the initvalues map
+_initValues = {
+          'title': _editedProduct.title,
+          'description': _editedProduct.description,
+          'price': _editedProduct.price.toString(),
+          'imageUrl': '',
+        };
+//because imgUrl textFildform already using controller so we cant use initial value in it
+        _imgUrlController.text = _editedProduct.imageUrl;
+
+3) add initvalue map values into the all textfieldform to preview the stored items
+initialValue: _initValues['title'],
+
+4) products_provider -> create a updateProduct function
+= which take id as a index
+= void updateProduct(String id, Product newProduct) { }
+
+5) edit_product_screen -> add updateProduct function into saveForm function
+= if it is clicked by edited button it will update the product otherwise create a new one
+
+1)

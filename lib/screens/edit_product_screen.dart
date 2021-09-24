@@ -28,11 +28,51 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
   );
 
+  // these values are set up for new product
+  var _initValues = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
+
+  // it will run only one time then it will be false in did change Dependencies
+  var _isInit = true;
+
 //step 5 : when the update function rebuild state then it run initstate after listning
   @override
   void initState() {
     _imgUrlFocusNode.addListener(_updateImageUrl);
     super.initState();
+  }
+
+  // it also run before builder excution
+  @override
+  void didChangeDependencies() {
+    // this will run single time then it will not be initilze
+    if (_isInit) {
+      //step 1 : reciving id from edited button
+      final productId = ModalRoute.of(context)!.settings.arguments;
+      // when we are reciving productId we should not have it before
+      // it will check if we pass the argument or not , it will run when we pass edited and pass argument
+      if (productId != null) {
+        //step 2 : here we access the product which has been click edited and assign it to _editedProduct
+        _editedProduct =
+            Provider.of<Products>(context, listen: false).findById(productId);
+        //step 3 : _editedProduct value now moves into _initValues Map , to show already exisiting values
+        _initValues = {
+          'title': _editedProduct.title,
+          'description': _editedProduct.description,
+          'price': _editedProduct.price.toString(),
+          // 'imageUrl': _editedProduct.imageUrl,
+          'imageUrl': '',
+        };
+        //because imgUrl textFildform already using controller so we cant use initial value in it
+        _imgUrlController.text = _editedProduct.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
 // to clear the memory when we leave the screen
@@ -71,17 +111,22 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (!isValid) {
       return;
     }
+
     // by using global key which has the asscess of form , we can save it
     _form.currentState!.save();
+
+    // check if the editedProduct has Id of argument or not , if it has so we update the product otherwise create a new one
+    if (_editedProduct.id != null.toString()) {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
+    } else {
+      // does not have argument edited button
+      Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    }
     // adding the product into the list
-    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+
     // after saving and adding into the item list , it will show manage product screen.
     Navigator.of(context).pop();
-    // print(_editedProduct.title);
-    // print(_editedProduct.description);
-    // print(_editedProduct.imageUrl);
-    // print(_editedProduct.price);
-    // print(_editedProduct.id);
   }
 
   @override
@@ -104,6 +149,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
+                // it will show the initial value which we get from argument
+                initialValue: _initValues['title'],
                 decoration: InputDecoration(labelText: 'Title'),
                 //  this will show a button which will move towards next input
                 textInputAction: TextInputAction.next,
@@ -115,11 +162,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 // when the save button is click the form input move into the product object by updating it
                 onSaved: (value) {
                   _editedProduct = Product(
-                      id: null.toString(),
-                      title: value.toString(),
-                      description: _editedProduct.description,
-                      price: _editedProduct.price,
-                      imageUrl: _editedProduct.imageUrl);
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
+                    title: value.toString(),
+                    description: _editedProduct.description,
+                    price: _editedProduct.price,
+                    imageUrl: _editedProduct.imageUrl,
+                  );
                 },
                 // validator value is the input value
                 validator: (value) {
@@ -132,6 +181,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValues['price'],
                 decoration: InputDecoration(labelText: 'Price'),
                 //  this will show a button which will move towards next input
                 textInputAction: TextInputAction.next,
@@ -145,7 +195,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 // when the save button is click the form input move into the product object by updating it
                 onSaved: (value) {
                   _editedProduct = Product(
-                      id: null.toString(),
+                      id: _editedProduct.id,
+                      isFavorite: _editedProduct.isFavorite,
                       title: _editedProduct.title,
                       description: _editedProduct.description,
                       price: double.parse(value.toString()),
@@ -169,6 +220,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValues['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 //how many lines should be display
                 maxLines: 3,
@@ -178,7 +230,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 // when the save button is click the form input move into the product object by updating it
                 onSaved: (value) {
                   _editedProduct = Product(
-                      id: null.toString(),
+                      id: _editedProduct.id,
+                      isFavorite: _editedProduct.isFavorite,
                       title: _editedProduct.title,
                       description: value.toString(),
                       price: _editedProduct.price,
@@ -220,6 +273,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      // initialValue: _initValues['imageUrl'],
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
@@ -234,7 +288,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       // when the save button is click the form input move into the product object by updating it
                       onSaved: (value) {
                         _editedProduct = Product(
-                          id: null.toString(),
+                          id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                           title: _editedProduct.title,
                           description: _editedProduct.description,
                           price: _editedProduct.price,
