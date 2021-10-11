@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:myshop/models/product.dart';
 
 class Products with ChangeNotifier {
@@ -52,20 +54,39 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    // the product we are getting from argument , it will be pass into new product then it will be added
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    );
+    // url consist a url
+    const url =
+        'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
 
-    _items.add(newProduct);
-    // _items.insert(0, newProduct); // at the start of the list
+    // it will post and body is sending a map in json
+    http
+        .post(
+      Uri.parse(url),
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'price': product.price,
+        'imageUrl': product.imageUrl,
+        'isFavorite': product.isFavorite,
+      }),
+    )  // then will be run after it got the response from http and forward the response
+        .then((response) {
+      // the product we are getting from argument , it will be pass into new product then it will be added
+      final newProduct = Product(
+        // we decode the response body and get the name which is stored as a map
+        id: json.decode(response.body)['name'],
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
 
-    //it will notify all the listner that some update has been made therefor listner widget will rebuild
-    notifyListeners();
+      _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
+
+      //it will notify all the listner that some update has been made therefor listner widget will rebuild
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {

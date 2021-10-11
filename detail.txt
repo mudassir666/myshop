@@ -592,3 +592,31 @@ video 15 : allowing usersto delete products
 
 2) user_product_items -> add a delete function into delete button with the help of provider
 = Provider.of<Products>(context,listen: false).deleteProduct(id);
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+                                              sending http request
+
+video 5 : how to send http requests
+
+1) Set a firebase realtime database
+
+2) add http package
+
+3) Rest apis / restful apis follow a default approach regarding how incoming requests should be structured / set update
+
+video 6 :sending POST requests
+
+1) models ->  products_Provider ->  import http , converter
+2) in addProduct function 
+= create a url
+= http.post in which we provide url and body = which we are sending as in json 
+= in json.encode() pass Map
+
+video 7 : working with future in dart 
+
+1) post return future so just after http.post use .then
+= .then wait for the response 
+= use the response as id , convert the response body
+id: json.decode(response.body)['name'],
+
+
