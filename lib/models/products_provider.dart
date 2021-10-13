@@ -53,13 +53,13 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     // url consist a url
     const url =
         'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
 
     // it will post and body is sending a map in json
-    http
+  return  http
         .post(
       Uri.parse(url),
       body: json.encode({

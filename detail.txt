@@ -619,4 +619,21 @@ video 7 : working with future in dart
 = use the response as id , convert the response body
 id: json.decode(response.body)['name'],
 
+video 9 : Showing a loading indicator
+
+1) models -> product_provider 
+= make the addProduct to return Future so it could wait
+= and function will return http which is future 
+
+2) screens -> edit_product_screen 
+= create a var _isloading = false 
+= in saveForm when it checking to add or update use Navigotor pop
+= when the form is save set the _isloading = true so it could show loading spinner
+= when it is checking to update or add set the _isloading = false and pop imidiatly
+= in body use if condition to check  _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : form() 
+
 
