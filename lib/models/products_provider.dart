@@ -59,7 +59,7 @@ class Products with ChangeNotifier {
         'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
 
     // it will post and body is sending a map in json
-  return  http
+    return http
         .post(
       Uri.parse(url),
       body: json.encode({
@@ -69,7 +69,7 @@ class Products with ChangeNotifier {
         'imageUrl': product.imageUrl,
         'isFavorite': product.isFavorite,
       }),
-    )  // then will be run after it got the response from http and forward the response
+    ) // then will be run after it got the response from http and forward the response
         .then((response) {
       // the product we are getting from argument , it will be pass into new product then it will be added
       final newProduct = Product(
@@ -86,6 +86,11 @@ class Products with ChangeNotifier {
 
       //it will notify all the listner that some update has been made therefor listner widget will rebuild
       notifyListeners();
+    }) // it will catch the error if it occurs in http or then
+        .catchError((error) {
+      print(error);
+      // it is going to throw the same error after catching it but for some usefull thing
+      throw error;
     });
   }
 

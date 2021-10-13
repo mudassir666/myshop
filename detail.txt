@@ -636,6 +636,16 @@ video 9 : Showing a loading indicator
             )
           : form() 
 
-          
 
+video 10 : Handling errors gracefully
+
+1) .then is used for success
+= .catchError is used for failure
+= products_provider -> add .catchError just after .then so it could any error in http.post and .then
+= catchError will throw error which will be handle error just to show the error text
+
+2) Provider.of<Products>(context, listen: false).addProduct(_editedProduct).catchError((error) {
+       return showDialog<Null>( AlertDialog() )
+= edit_product_screen -> add .catchError before .then because .then is just poping out 
+= if error will be catch it will show Alertdialog
 
