@@ -665,3 +665,11 @@ video 11 : Working with async and await
 = catch block has showDialog which will also await
 = finally is use no matter what if it successed or fail
 = finally block has setState which will make the loading false and pop it out of screen
+
+video 12 : Fetching Data, initState & _of(context)
+
+1) Create a fetching function 
+= http.get and use async await 
+= try and catch
+
+2) product_overview_screen -> use initState because it always run before build so it could get the data from database 

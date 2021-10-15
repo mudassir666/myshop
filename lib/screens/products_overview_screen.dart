@@ -20,6 +20,36 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  // var _isInit = true;
+
+
+  // init will only run ones before building the screen
+  @override
+  void initState() {
+    
+    // approch 1 : to make it listen false
+    Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+   
+
+   // approch 2 : to use delay
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // });
+
+    super.initState();
+  }
+
+
+ // approch 3 : to use didChangeDependcies
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //      Provider.of<Products>(context).fetchAndSetProducts();
+  // }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

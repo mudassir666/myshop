@@ -53,6 +53,19 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  Future<void> fetchAndSetProducts() async {
+    const url =
+        'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
+
+    // get will get the data from database
+    try {
+      final response = await http.get(Uri.parse(url));
+      print(json.decode(response.body));
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     // url consist a url
     const url =
@@ -71,7 +84,7 @@ class Products with ChangeNotifier {
           'imageUrl': product.imageUrl,
           'isFavorite': product.isFavorite,
         }),
-      ); 
+      );
       // the product we are getting from argument , it will be pass into new product then it will be added
       final newProduct = Product(
         // we decode the response body and get the name which is stored as a map
@@ -87,8 +100,7 @@ class Products with ChangeNotifier {
 
       //it will notify all the listner that some update has been made therefor listner widget will rebuild
       notifyListeners();
-    }
-     catch (error) {
+    } catch (error) {
       //  it will catch the error if it occurs in await
 
       print(error);
