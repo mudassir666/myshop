@@ -53,24 +53,25 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     // url consist a url
     const url =
         'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
 
-    // it will post and body is sending a map in json
-    return http
-        .post(
-      Uri.parse(url),
-      body: json.encode({
-        'title': product.title,
-        'description': product.description,
-        'price': product.price,
-        'imageUrl': product.imageUrl,
-        'isFavorite': product.isFavorite,
-      }),
-    ) // then will be run after it got the response from http and forward the response
-        .then((response) {
+// try has the code which might fail because of user input and internet connection
+    try {
+      // await mean it will act like .then for waiting
+      final response = await http.post(
+        Uri.parse(url),
+        // it will post and body is sending a map in json
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isFavorite': product.isFavorite,
+        }),
+      ); 
       // the product we are getting from argument , it will be pass into new product then it will be added
       final newProduct = Product(
         // we decode the response body and get the name which is stored as a map
@@ -86,12 +87,14 @@ class Products with ChangeNotifier {
 
       //it will notify all the listner that some update has been made therefor listner widget will rebuild
       notifyListeners();
-    }) // it will catch the error if it occurs in http or then
-        .catchError((error) {
+    }
+     catch (error) {
+      //  it will catch the error if it occurs in await
+
       print(error);
       // it is going to throw the same error after catching it but for some usefull thing
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

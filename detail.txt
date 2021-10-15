@@ -649,3 +649,19 @@ video 10 : Handling errors gracefully
 = edit_product_screen -> add .catchError before .then because .then is just poping out 
 = if error will be catch it will show Alertdialog
 
+video 11 : Working with async and await
+
+1) make a addProduct async function which always return future 
+= await will be used with http. to get the response
+
+2) try and catch block
+=  try has the code which might fail because of user input and internet connection 
+= catch block is for error handling
+
+3) screens -> edit_product_screen
+= make saveform async and future 
+= addProduct function will be await because it is asyncronac
+= use try block on addProduct
+= catch block has showDialog which will also await
+= finally is use no matter what if it successed or fail
+= finally block has setState which will make the loading false and pop it out of screen

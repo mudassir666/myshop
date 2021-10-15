@@ -108,7 +108,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     // it will check all the validation must return null otherwise it will end
     final isValid = _form.currentState!.validate();
     if (!isValid) {
@@ -133,11 +133,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      // does not have argument edited button
-      Provider.of<Products>(context, listen: false).addProduct(_editedProduct)
-          // this will catch the error if occurs
-          .catchError((error) {
-       return showDialog<Null>(
+      try {
+        // provider is await because it is asyncronac
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      }
+      // this will catch the error if occurs
+      catch (error) {
+     await   showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
@@ -152,19 +155,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      }).then((_) {
+      } finally {
         // when we add make it false
         setState(() {
           _isLoading = false;
         });
         // after saving and adding into the item list , it will show manage product screen.
         Navigator.of(context).pop();
-      });
+      }
     }
-    // adding the product into the list
-
-    // // after saving and adding into the item list , it will show manage product screen.
-    // Navigator.of(context).pop();
   }
 
   @override
