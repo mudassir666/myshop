@@ -9,6 +9,12 @@ import 'edit_product_screen.dart';
 class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-products';
 
+  // this function will return a future and context is argument because it is outside a build
+  Future<void> _refreshProducts(BuildContext context) async {
+    // it is false because we dont want to listen updates ,we just want to get the data
+   await Provider.of<Products>(context,listen: false).fetchAndSetProducts();
+  } 
+
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Products>(context);
@@ -25,19 +31,22 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-          itemCount: productData.items.length,
-          itemBuilder: (_, i) => Column(
-            children: [
-              UserProductItem(
-                id: productData.items[i].id,
-                title: productData.items[i].title,
-                imgUrl: productData.items[i].imageUrl,
-              ),
-              Divider(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: () => _refreshProducts(context),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: ListView.builder(
+            itemCount: productData.items.length,
+            itemBuilder: (_, i) => Column(
+              children: [
+                UserProductItem(
+                  id: productData.items[i].id,
+                  title: productData.items[i].title,
+                  imgUrl: productData.items[i].imageUrl,
+                ),
+                Divider(),
+              ],
+            ),
           ),
         ),
       ),

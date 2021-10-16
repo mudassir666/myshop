@@ -686,3 +686,14 @@ video 13 : How to transform fetched data
 = in initState make the _isloading = true to show the spinner 
 = when the data will be fetch use .then to make it false
 = till it is true in the body it will show loading spinner
+
+video 14 : implementing pull to refresh
+
+1) user_products_screen -> create a function to refresh the page
+= function must return future 
+= function is returning a fetching data from database 
+= function must need a context and it get need data , it has nothing to updates
+
+2) on UserProductItem use a RefreshIndicator 
+= RefreshIndicator(
+        onRefresh: () => _refreshProducts(context), )
