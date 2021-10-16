@@ -20,18 +20,27 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  // to show loading avatar
+  var _isloading = false;
   // var _isInit = true;
-
 
   // init will only run ones before building the screen
   @override
   void initState() {
-    
     // approch 1 : to make it listen false
-    Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-   
+    setState(() {
+      _isloading = true;
+    });
 
-   // approch 2 : to use delay
+    Provider.of<Products>(context, listen: false)
+        .fetchAndSetProducts()
+        .then((_) {
+      setState(() {
+        _isloading = false;
+      });
+    });
+
+    // approch 2 : to use delay
     // Future.delayed(Duration.zero).then((_) {
     //   Provider.of<Products>(context).fetchAndSetProducts();
     // });
@@ -39,8 +48,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     super.initState();
   }
 
-
- // approch 3 : to use didChangeDependcies
+  // approch 3 : to use didChangeDependcies
   // @override
   // void didChangeDependencies() {
   //   if (_isInit) {
@@ -97,7 +105,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isloading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
   }
 }

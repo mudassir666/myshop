@@ -673,3 +673,16 @@ video 12 : Fetching Data, initState & _of(context)
 = try and catch
 
 2) product_overview_screen -> use initState because it always run before build so it could get the data from database 
+
+video 13 : How to transform fetched data
+
+1) In fetchAndSetProducts function decode the response as Map<String, dynamic> and stores it into extractedData
+= create a list of Product variable = loadedProducts 
+= run foreach on extratedData and add Product into loadedProducts
+= _items = loadedProducts;
+= notifyListeners();
+
+2) product_overview_screen -> create a var _isloading = false; to show loading spinner
+= in initState make the _isloading = true to show the spinner 
+= when the data will be fetch use .then to make it false
+= till it is true in the body it will show loading spinner
