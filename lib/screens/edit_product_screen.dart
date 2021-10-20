@@ -125,22 +125,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
     // check if the editedProduct has Id of argument or not , if it has so we update the product otherwise create a new one
     if (_editedProduct.id != null.toString()) {
-      Provider.of<Products>(context, listen: false)
-          .updateProduct(_editedProduct.id, _editedProduct);
-      // when we update make it false
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
-    } else {
       try {
-        // provider is await because it is asyncronac
         await Provider.of<Products>(context, listen: false)
-            .addProduct(_editedProduct);
-      }
-      // this will catch the error if occurs
-      catch (error) {
-     await   showDialog<Null>(
+            .updateProduct(_editedProduct.id, _editedProduct);
+      } catch (error) {
+        await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
@@ -155,15 +144,50 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      } finally {
-        // when we add make it false
-        setState(() {
-          _isLoading = false;
-        });
-        // after saving and adding into the item list , it will show manage product screen.
-        Navigator.of(context).pop();
       }
+      // when we update make it false
+      // setState(() {
+      //   _isLoading = false;
+      // });
+      // Navigator.of(context).pop();
+    } else {
+      try {
+        // provider is await because it is asyncronac
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      }
+      // this will catch the error if occurs
+      catch (error) {
+        await showDialog<Null>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Okay'),
+              )
+            ],
+          ),
+        );
+      }
+      // finally {
+      //   // when we add make it false
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   // after saving and adding into the item list , it will show manage product screen.
+      //   Navigator.of(context).pop();
+      // }
     }
+    // when we update make it false
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override

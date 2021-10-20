@@ -128,14 +128,30 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     // it will give the index of the product we are going to update
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     //to check if we have  the index or not
     if (prodIndex >= 0) {
-      // replace the chosen product from index to newProduct
-      _items[prodIndex] = newProduct;
-      notifyListeners();
+      // Url must be dynamic and should concertrate on id
+      final url =
+          'https://flutter-update-c572d-default-rtdb.firebaseio.com/products/$id.json';
+      try {
+        //Patch is use to update data
+        await http.patch(Uri.parse(url),
+            body: json.encode({
+              'title': newProduct.title,
+              'description': newProduct.description,
+              'price': newProduct.price,
+              'imageUrl': newProduct.imageUrl,
+            }));
+        // replace the chosen product from index to newProduct
+        _items[prodIndex] = newProduct;
+        notifyListeners();
+      } 
+      catch (error) {
+        throw error;
+      }
     } else {
       print('no index');
     }

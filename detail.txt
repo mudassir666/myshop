@@ -697,3 +697,15 @@ video 14 : implementing pull to refresh
 2) on UserProductItem use a RefreshIndicator 
 = RefreshIndicator(
         onRefresh: () => _refreshProducts(context), )
+
+video 15 : Updating Data via PATCH requests
+
+1) model -> product_provider 
+= in update method make it Future add asyn 
+= url must contain id which is refering a pacific product to update
+= use http.patch and dont touch isfavorite
+= use try catch
+
+2) screen -> edit_product_screen -> 
+= when call update funtion make it await and use try catch
+= call the setState and pop out after if else block  
