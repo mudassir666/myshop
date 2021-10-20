@@ -708,4 +708,25 @@ video 15 : Updating Data via PATCH requests
 
 2) screen -> edit_product_screen -> 
 = when call update funtion make it await and use try catch
-= call the setState and pop out after if else block  
+= call the setState and pop out after if else block 
+
+video 16 : Utilizing Optimistic Updating / delete
+
+1) model -> product_provider -> deleteProduct function
+= we create a bluePrint of a deleting product through its index , to store it in memory
+// it will store the index of the deleting product
+    final existingProductIndex = _items.indexWhere((prop) => prop.id == id);
+// it will store the deleting product in the memory
+    var existingProduct = _items[existingProductIndex];
+= in .then block , if we successed
+// after the response the product in the stored memory is not needed , it should be null
+      existingProduct = null as Product;
+= in catch block , if we failed
+// if we catch the error the product will be deleted so to undo that we use this approch to add it again
+    _items.insert(existingProductIndex, existingProduct);
+
+status code :
+200 , 201 everything is fine 
+300 redirected
+400 , 500 something is wrong 
+ 

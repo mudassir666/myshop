@@ -148,8 +148,7 @@ class Products with ChangeNotifier {
         // replace the chosen product from index to newProduct
         _items[prodIndex] = newProduct;
         notifyListeners();
-      } 
-      catch (error) {
+      } catch (error) {
         throw error;
       }
     } else {
@@ -158,7 +157,27 @@ class Products with ChangeNotifier {
   }
 
   void deleteProduct(String id) {
-    _items.removeWhere((prop) => prop.id == id);
+    final url =
+        'https://flutter-update-c572d-default-rtdb.firebaseio.com/products/$id';
+
+    // it will store the index of the deleting product
+    final existingProductIndex = _items.indexWhere((prop) => prop.id == id);
+    // it will store the deleting product in the memory
+    var existingProduct = _items[existingProductIndex];
+
+    http.delete(Uri.parse(url)).then((response) {
+      // print(response.statusCode);
+      // after the response the product in the stored memory is not needed , it should be null
+      existingProduct = null as Product;
+    }).catchError((_) {
+      // if we catch the error the product will be deleted so to undo that we use this approch to add it again
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+    });
+    // deleting the  product from the list not from the memory
+    _items.removeAt(existingProductIndex);
     notifyListeners();
+    // _items.removeWhere((prop) => prop.id == id);
+    // notifyListeners();
   }
 }
