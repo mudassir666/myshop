@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myshop/models/http_exception.dart';
 import 'package:myshop/models/product.dart';
 
 class Products with ChangeNotifier {
@@ -156,27 +157,36 @@ class Products with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     final url =
-        'https://flutter-update-c572d-default-rtdb.firebaseio.com/products/$id';
+        'https://flutter-update-c572d-default-rtdb.firebaseio.com/products/$id.json';
 
     // it will store the index of the deleting product
     final existingProductIndex = _items.indexWhere((prop) => prop.id == id);
+
     // it will store the deleting product in the memory
     var existingProduct = _items[existingProductIndex];
 
-    http.delete(Uri.parse(url)).then((response) {
-      // print(response.statusCode);
-      // after the response the product in the stored memory is not needed , it should be null
-      existingProduct = null as Product;
-    }).catchError((_) {
-      // if we catch the error the product will be deleted so to undo that we use this approch to add it again
-      _items.insert(existingProductIndex, existingProduct);
-      notifyListeners();
-    });
     // deleting the  product from the list not from the memory
     _items.removeAt(existingProductIndex);
     notifyListeners();
+
+    final response = await http.delete(Uri.parse(url));
+
+    // when something went wrong
+    if (response.statusCode >= 400) {
+      print(response.statusCode);
+      // if we catch the error the product will be deleted so to undo that we use this approch to add it again
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+
+      // throw cancel the function execution
+      throw HttpException('Could not delete product.');
+    }
+    // if nothing goes wrong just clear the memory
+    // after the response the product in the stored memory is not needed , it should be null
+    existingProduct = null as Product;
+
     // _items.removeWhere((prop) => prop.id == id);
     // notifyListeners();
   }

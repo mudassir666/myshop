@@ -729,4 +729,20 @@ status code :
 200 , 201 everything is fine 
 300 redirected
 400 , 500 something is wrong 
- 
+
+video 17 : Creating custom exceptions and more error handling
+
+1) model -> create http_exception.dart
+= use implements to Exception class where we could overwrite its methods because Exception is abstract class
+= overwrite toString
+
+2) models -> products_provider -> deleteProduct
+= make it future class by adding async and await
+= after the response check the response.statuscode must be less equal to 400 
+= if its greater add the items into the list and throw exception 
+
+3) widgets -> user_product_item 
+= in delete button use async and await plus try catch
+= if it catch the error it will show the snackbar
+= in catch block snackbar could not access context so create a variable and store 
+scaffold = ScaffoldMessenger.of(context);
