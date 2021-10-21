@@ -746,3 +746,16 @@ video 17 : Creating custom exceptions and more error handling
 = if it catch the error it will show the snackbar
 = in catch block snackbar could not access context so create a variable and store 
 scaffold = ScaffoldMessenger.of(context);
+
+video 19 : Updating the favorite status optimistically
+
+1) Http package throw its own error only for get and post request if the server return error statuscode
+= for patch put delete http package does not do that so we have to handle the error ourself
+
+2) model -> product.dart
+=  make the toggleFavoriteStatus Future by adding async and await
+= save the isFavorie status before updating it 
+ final oldStatus = isFavorite;
+= use the id Url
+= in try block use http.patch to only update isFavorite and also check the statuscode if its higher just undo the pervious action
+= in check block if it catches any error just undo the action
