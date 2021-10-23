@@ -759,3 +759,15 @@ video 19 : Updating the favorite status optimistically
 = use the id Url
 = in try block use http.patch to only update isFavorite and also check the statuscode if its higher just undo the pervious action
 = in check block if it catches any error just undo the action
+
+video 20 : Storing Orders in the Web
+
+1) model -> order.dart 
+= make the addOrder function future and change it just like addProduct 
+= create a timestamp variable to store time 
+= create a nested map for product and store it as list
+
+2) screen -> cart_screen
+= extract ordernow button as OrderButton to cause less rebuild and make it stateful to show loading spinner
+= disable the button when the amount is less then 0 or isLoading is true
+= use async and await , while waiting it will show loading spinner
