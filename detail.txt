@@ -771,3 +771,15 @@ video 20 : Storing Orders in the Web
 = extract ordernow button as OrderButton to cause less rebuild and make it stateful to show loading spinner
 = disable the button when the amount is less then 0 or isLoading is true
 = use async and await , while waiting it will show loading spinner
+
+video 21 : Fetching Orders & fixing an issue
+
+1) model -> order.dart 
+= create a function fetchandsetOrder just like for products 
+= to fetching nested list of products just remember first use mapping to store it in cartItems then make it list
+= add if condition just after response to check does response returned with items or not , if it is null just terminte the function
+= add the same if condition in product fetching
+
+2) screen -> orders_screen
+= make OrdersScreen stateful to access  initState 
+= add isLoading spinner logic which we applied in product_overview_screen

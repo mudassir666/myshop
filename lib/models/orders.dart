@@ -25,6 +25,57 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchAndSetOrders() async {
+    const url =
+        'https://flutter-update-c572d-default-rtdb.firebaseio.com/orders.json';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      print(json.decode(response.body));
+      // if the response has nothing in return so it will terminate right here because running foreach on extractedData cause error
+      if (json.decode(response.body) == null) {
+        _orders = [];
+        return;
+      }
+      // to store the fetch data
+      final List<OrderItem> loadedOrders = [];
+      // fetched data is in the form of map
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      // if the response has nothing in return so it will terminate right here because running foreach on extractedData cause error
+      // if (extractedData == null) {
+      //   return;
+      // }
+
+      extractedData.forEach((orderId, orderData) {
+        loadedOrders.add(
+          OrderItem(
+            id: orderId,
+            amount: orderData['amount'],
+            dateTime: DateTime.parse(orderData['dateTime']),
+            // product consist list of cartitems which are map , list of maps
+            products: (orderData['products'] as List<dynamic>)
+                .map(
+                  (item) => CartItem(
+                    id: item["id"],
+                    title: item['title'],
+                    quantity: item['quantity'],
+                    price: item['price'],
+                  ),
+                )
+                .toList(),
+          ),
+        );
+      });
+      // loadedOrders transfer its orders into the orders and the orders will be reversed
+      _orders = loadedOrders.reversed.toList();
+      notifyListeners();
+    }
+     catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     const url =
         'https://flutter-update-c572d-default-rtdb.firebaseio.com/orders.json';
@@ -59,10 +110,40 @@ class Orders with ChangeNotifier {
         ),
       );
       notifyListeners();
-    } 
-    catch (error) {
+    } catch (error) {
       throw error;
     }
   }
-
 }
+
+// Future<void> fetchAndSetProducts() async {
+//   const url =
+//       'https://flutter-update-c572d-default-rtdb.firebaseio.com/products.json';
+
+//   // get will get the data from database
+//   try {
+//     final response = await http.get(Uri.parse(url));
+//     // response has a Map which have id and its description
+//     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+//     // temporay list which will store product and places into items
+//     final List<Product> loadedProducts = [];
+//     //                       key    value
+//     extractedData.forEach((prodId, prodData) {
+//       loadedProducts.add(Product(
+//         id: prodId,
+//         title: prodData['title'],
+//         description: prodData['description'],
+//         price: prodData['price'],
+//         imageUrl: prodData['imageUrl'],
+//         isFavorite: prodData['isFavorite'],
+//       ));
+//     });
+//     // moving it into items
+//     _items = loadedProducts;
+//     // to updated all places
+//     notifyListeners();
+//     // print(json.decode(response.body));
+//   } catch (error) {
+//     throw error;
+//   }
+// }

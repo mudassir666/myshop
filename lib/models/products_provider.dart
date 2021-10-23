@@ -61,8 +61,18 @@ class Products with ChangeNotifier {
     // get will get the data from database
     try {
       final response = await http.get(Uri.parse(url));
+      // if the response has nothing in return so it will terminate right here because running foreach on extractedData cause error
+    if (json.decode(response.body) == null) {
+      _items = [];
+      return;
+    }
+   
       // response has a Map which have id and its description
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    // if the response has nothing in return so it will terminate right here because running foreach on extractedData cause error
+    // if (extractedData == null) {
+    //   return;
+    // }
       // temporay list which will store product and places into items
       final List<Product> loadedProducts = [];
       //                       key    value
