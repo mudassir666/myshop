@@ -783,3 +783,31 @@ video 21 : Fetching Orders & fixing an issue
 2) screen -> orders_screen
 = make OrdersScreen stateful to access  initState 
 = add isLoading spinner logic which we applied in product_overview_screen
+
+video 22 : Using the futureBuilder widget & improving the code
+
+1) screen -> orders_screen
+= use future builder to optimise the code
+= future builder which take future and automatally start listing to that by adding then and catch method
+= create a future which will insure that the future will not be create and widget will not be rebuild 
+late Future _ordersFuture;
+
+Future _obtainOrdersFuture() {
+    return Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+  }
+
+  @override
+  void initState() {
+    _ordersFuture = _obtainOrdersFuture();
+    super.initState();
+  }
+
+= FutureBuilder(
+// it take the future =  future: _ordersFuture,
+// it take the context and data which is the response is type of async = builder: (ctx, dataSnapshot) {} )
+= dataSnapshot has many properties like waiting which will show progressIndicator 
+failure part to handle the errors
+success part to run it smoothly
+= Dont use this approch  final orderData = Provider.of<Orders>(context); because when 
+Provider.of<Orders>(context, listen: false).fetchAndSetOrders() will be call it will notify listner which will cause infinite loop
+to solve this problem use consumer
